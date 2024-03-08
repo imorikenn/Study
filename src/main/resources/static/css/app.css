@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.main {
+  background-color: #fff;
+}
+
+.main .page-header {
+  margin-top: 0;
+}
+
+ul {
+  list-style: none;
+}

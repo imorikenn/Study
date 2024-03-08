@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+	<head>
+		<meta charset="UTF-8" th:remove="tag">
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<div th:if="${success}" th:text="${success}" class="alert alert-success" role="alert"></div>
+			<div th:if="${error}" th:text="${error}" class="alert alert-danger" role="alert"></div>
+			<h1 class="page-header">カテゴリ一覧</h1>
+			<table class="table table-striped" cellpadding="0" cellspacing="0">
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">名前</th>
+					<th scope="col">作成日時</th>
+					<th scope="col">更新日時</th>
+					<th scope="col" class="actions">アクション</th>
+				</tr>
+				<tr th:each="category: ${categories}" th:object="${category}">
+					<td th:text="*{id}"></td>
+					<td th:text="*{name}"></td>
+					<td th:text="*{createdAt}"></td>
+					<td th:text="*{modifiedAt}"></td>
+					<td class="actions text-nowrap">
+						<a th:href="@{/categories/edit/{id}(id=*{id})}" class="btn btn-primary">編集</a>
+						<a th:href="@{/categories/delete/{id}(id=*{id})}" class="btn btn-danger">削除</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>

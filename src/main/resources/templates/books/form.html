@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+	<head>
+		<meta charset="UTF-8" th:remove="tag">
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<h1 th:text="'書籍' + ${isNew ? '追加' : '編集'}" class="page-header"></h1>
+			<form th:action="@{/books/process}" th:object="${book}" method="post">
+				<ul th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
+				    <li th:each="err : ${#fields.errors('*')}">
+				        <span th:text="${err}"></span>
+				    </li>
+				</ul>
+				<input type="hidden" th:field="*{id}">
+				<div class="form-group">
+					<label for="title">タイトル</label>
+					<input class="form-control" type="text" th:field="*{title}">
+				</div>
+				<div class="form-group">
+					<label for="price">価格</label>
+					<input class="form-control" type="text" th:field="*{price}">
+				</div>
+				<div class="form-group">
+				<label for="author">著者</label>
+					<select class="form-control" th:field="*{author}">
+						<th:block th:each="author : ${@authorRepository.findAll()}">
+							<option th:value="${author.id}" th:text="${author.name}"></option>
+						</th:block>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="category">カテゴリ</label>
+					<select class="form-control" th:field="*{category}">
+						<th:block th:each="category : ${@categoryRepository.findAll()}">
+							<option th:value="${category.id}" th:text="${category.name}"></option>
+						</th:block>
+					</select>
+				</div>
+				<div class="form-group">
+					<input class="btn btn-primary" type="submit" th:value="${isNew ? '登録' : '更新'}">
+				</div>
+			</form>
+			
+		</div>
+	</body>
+</html>

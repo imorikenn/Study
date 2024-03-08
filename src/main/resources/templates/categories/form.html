@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+	<head>
+		<meta charset="UTF-8" th:remove="tag">
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<h1 th:text="'カテゴリ' + ${isNew ? '追加' : '編集'}" class="page-header"></h1>
+			<form th:action="@{/categories/process}" th:object="${category}" method="post">
+				<ul th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
+				    <li th:each="err : ${#fields.errors('*')}">
+				        <span th:text="${err}"></span>
+				    </li>
+				</ul>
+				<input type="hidden" th:field="*{id}">
+				<label>カテゴリ名</label>
+				<input class="form-control" type="text" th:field="*{name}">
+				<input class="btn btn-primary" type="submit" th:value="${isNew ? '登録' : '更新'}">
+			</form>
+		</div>
+	</body>
+</html>
